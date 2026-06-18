@@ -94,7 +94,7 @@
     <div class="col-span-1 xl:col-span-7 flex flex-col gap-[24px]">
         
         <!-- 4 Stat Cards: 2x2 Grid -->
-        <div class="grid grid-cols-2 gap-[20px]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px]">
             <!-- Cuaca Card -->
             <div class="bg-[#F3F3F3] dark:bg-[#20212a] border border-transparent dark:border-[rgba(255,255,255,0.05)] rounded-[24px] p-[20px] flex flex-col justify-between h-[130px] modern-card relative animate-fade-in-up stagger-2">
                 <div class="flex justify-between items-start">

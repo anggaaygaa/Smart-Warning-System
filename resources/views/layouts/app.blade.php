@@ -118,7 +118,8 @@
 
 </head>
 <body x-data="{ 
-          isDark: localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) 
+          isDark: localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
+          sidebarOpen: false
       }"
       @toggle-theme.window="
           isDark = !isDark; 
@@ -134,7 +135,10 @@
             $currentRoute = request()->path(); // or Route::currentRouteName()
         @endphp
         
-        <aside class="w-[260px] bg-[#F3F3F3] dark:bg-[#20212a] flex flex-col sticky top-0 h-screen rounded-tr-[32px] rounded-br-[32px] overflow-hidden z-20 shrink-0 border-r border-transparent dark:border-[rgba(255,255,255,0.05)] transition-colors duration-300 shadow-[4px_0_32px_rgba(146,146,197,0.3)] dark:shadow-[4px_0_32px_rgba(0,0,0,0.5)]">
+        <!-- Mobile backdrop -->
+        <div x-show="sidebarOpen" class="fixed inset-0 bg-black/50 z-40 md:hidden" @click="sidebarOpen = false" x-transition.opacity style="display: none;"></div>
+
+        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="fixed md:relative w-[260px] bg-[#F3F3F3] dark:bg-[#20212a] flex flex-col top-0 left-0 h-screen rounded-tr-[32px] rounded-br-[32px] overflow-hidden z-50 shrink-0 border-r border-transparent dark:border-[rgba(255,255,255,0.05)] transition-transform duration-300 shadow-[4px_0_32px_rgba(146,146,197,0.3)] dark:shadow-[4px_0_32px_rgba(0,0,0,0.5)]">
             <!-- Logo -->
             <div class="px-8 pt-[40px] pb-[40px] flex items-center justify-start">
                 <a href="{{ route('dashboard') }}" class="block transition-transform hover:scale-105">
@@ -249,12 +253,17 @@
         <main class="flex-1 w-full flex flex-col relative z-0 h-screen overflow-y-auto overflow-x-hidden scroll-smooth">
             <div class="max-w-[1440px] w-full mx-auto flex flex-col min-h-full">
                 
-                <div class="px-[24px] md:px-[32px] pt-[24px] flex-shrink-0 transition-colors duration-300">
+                <div class="px-[16px] md:px-[32px] pt-[16px] md:pt-[24px] flex-shrink-0 transition-colors duration-300">
                 <!-- Global Top Header -->
-                <header class="flex items-center justify-between bg-[#F3F3F3] dark:bg-[#20212a] rounded-[24px] px-[24px] py-[16px] mb-[20px] transition-colors duration-300 border border-transparent dark:border-[rgba(255,255,255,0.05)] shadow-sm">
-                    <h2 id="page-title" class="text-[20px] font-bold text-black dark:text-white tracking-tight">@yield('title')</h2>
+                <header class="flex items-center justify-between bg-[#F3F3F3] dark:bg-[#20212a] rounded-[24px] px-[16px] md:px-[24px] py-[16px] mb-[20px] transition-colors duration-300 border border-transparent dark:border-[rgba(255,255,255,0.05)] shadow-sm gap-2">
+                    <div class="flex items-center gap-3">
+                        <button @click="sidebarOpen = true" class="md:hidden text-[#9292C5] dark:text-[#a5a5d1] hover:text-[#555] dark:hover:text-white transition-colors cursor-pointer shrink-0">
+                            <svg class="w-[28px] h-[28px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        </button>
+                        <h2 id="page-title" class="text-[18px] md:text-[20px] font-bold text-black dark:text-white tracking-tight truncate">@yield('title')</h2>
+                    </div>
                     
-                    <div class="flex items-center gap-[20px] relative" x-data="{ open: false }">
+                    <div class="flex items-center gap-[10px] md:gap-[20px] relative" x-data="{ open: false }">
                         
                         <!-- Theme Toggle Script using Alpine JS Event -->
                         <button @click="$dispatch('toggle-theme')"
@@ -309,7 +318,7 @@
             </div>
 
                 <!-- Content Area -->
-                <div class="px-[24px] md:px-[32px] pb-[32px] w-full relative z-0 flex-1">
+                <div class="px-[16px] md:px-[32px] pb-[32px] w-full relative z-0 flex-1">
                     @yield('content')
                 </div>
             </div>

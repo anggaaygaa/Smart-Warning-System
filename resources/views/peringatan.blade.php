@@ -83,7 +83,7 @@
             </div>
         </div>
 
-        <div class="w-full relative overflow-y-auto pr-2 rounded-[16px] bg-[#F9F9FB] dark:bg-[#1a1b24] border border-[#E5E5EF] dark:border-[rgba(255,255,255,0.02)] transition-colors duration-300">
+        <div class="w-full relative overflow-auto pr-2 rounded-[16px] bg-[#F9F9FB] dark:bg-[#1a1b24] border border-[#E5E5EF] dark:border-[rgba(255,255,255,0.02)] transition-colors duration-300">
             <table class="w-full text-left text-[13px]">
                 <thead class="sticky top-0 bg-[#F9F9FB] dark:bg-[#1a1b24] border-b-[2px] border-[#E5E5EF] dark:border-[#2a2b36] z-10 text-[13px] font-[800] text-black dark:text-white">
                     <tr>
